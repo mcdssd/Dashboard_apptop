@@ -1,0 +1,55 @@
+---
+title: "Appdomilhão"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns #rowls para linhas na horizontal
+    vertical_layout: fill #scroll para caber tudo 
+runtime: shiny    
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(dplyr)
+library(ggplot2)
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Tabela
+
+```{r}
+renderTable({ #redenrizar a tabela
+  iris %>% head ()
+})
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Gráfico 1
+
+```{r}
+renderPlot({
+  iris_tbl <- as_tibble(iris)
+
+ggplot(iris_tbl) +
+  aes(x = Sepal.Length, y = Sepal.Width) +
+  geom_point ()
+})
+
+
+```
+
+### Gráfico 2
+
+```{r}
+renderPlot({
+  iris_tbl <- as_tibble(iris)
+
+ggplot(iris_tbl) +
+  aes(y = Sepal.Length, col = Species) +
+  geom_boxplot ()
+})
+```
+
